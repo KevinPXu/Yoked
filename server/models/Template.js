@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const Exercises = require('./Exercises');
+const Exercise = require('./Exercise');
 
 const templateSchema = new Schema ({
     name: {
