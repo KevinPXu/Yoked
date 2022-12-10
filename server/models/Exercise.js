@@ -11,10 +11,6 @@ const exerciseSchema = new Schema({
         required: 'Exercise must be named',
         trim: true
     },
-    bodyPart: {
-        type: BodyPart,
-        required: true
-    },
     sets: {
         type: Number,
         required: true
