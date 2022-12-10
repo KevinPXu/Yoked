@@ -5,7 +5,7 @@ const {
     getSingleUser,
     createUser,
     login
-} = require('../../controllers/UserController.js');
+} = require('../../controllers/UserController');
 
 const { authMiddleware } = require('../../utils/auth');
 
