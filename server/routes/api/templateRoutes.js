@@ -6,7 +6,7 @@ const {
     updateTemplate,
     createTemplate,
     deleteTemplate
-} = require('../..controllers/TemplateController');
+} = require('../../controllers/TemplateController');
 
 const { authMiddleware } = require('../../utils/auth');
 
