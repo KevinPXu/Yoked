@@ -1,4 +1,4 @@
-const { BodyPart } = require('../models');
+const { BodyPart, User } = require('../models');
 
 module.exports = {
     async getBodyParts(req, res) {
@@ -10,13 +10,18 @@ module.exports = {
         }
         res.json(foundBodyParts)
     },
-    async createBodyPart(req, res) {
-        const bodyPart = await BodyPart.create(req.body);
+    async createBodyPart({ user, body }, res) {
+        const bodyPart = await BodyPart.create(body);
         if (!bodyPart) {
             return res.status(400).json({
                 message: "Unable to create body part"
             })
         }
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: user._id},
+            { $push: { bodyParts: bodyPart._id }},
+            { new: true}
+        )
         res.json(bodyPart)
     }, 
     async getSingleBodyPart(req, res) {
