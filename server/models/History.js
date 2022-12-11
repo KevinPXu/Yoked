@@ -5,10 +5,12 @@ const historySchema = new Schema({
     type: Schema.Types.ObjectId,
     default: () => new Types.ObjectId(),
   },
-  exercises: {
-    type: String,
-    required: true,
-  },
+  exercises: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'exercise'
+    }
+  ],
   Date: {
     type: Date,
     required: true,
