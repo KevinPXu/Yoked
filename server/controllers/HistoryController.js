@@ -3,7 +3,7 @@ const { History, User } = require('../models/');
 module.exports = {
     // GET to /users/:userId/history
     async getHistory(req, res) {
-        const userHistory = await User.find({ _id: req.params.userId })
+        const userHistory = await User.find({ _id: req.user._id })
             .populate({
                 path: 'history',
                 populate: {
@@ -20,7 +20,7 @@ module.exports = {
     async saveToHistory(req, res) {
         const newHistory = await History.create(req.body);
         const updatedUser = await User.findOneAndUpdate(
-            { _id: req.params.userId },
+            { _id: req.user._id },
             { $push: { history: newHistory.historyId } },
             { new: true }
         );
