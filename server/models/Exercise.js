@@ -1,5 +1,4 @@
-const { Schema, model } = require("mongoose");
-const BodyPart = require('./BodyPart')
+const { Schema, model, Types } = require("mongoose");
 
 const exerciseSchema = new Schema({
     exerciseId: {
@@ -11,6 +10,12 @@ const exerciseSchema = new Schema({
         required: 'Exercise must be named',
         trim: true
     },
+    bodyParts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'bodyPart'
+        }
+    ],
     sets: {
         type: Number,
         required: true
