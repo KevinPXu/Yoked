@@ -1,10 +1,6 @@
 const { Schema, model, Types } = require("mongoose");
 
 const exerciseSchema = new Schema({
-    exerciseId: {
-        type: Schema.Types.ObjectId,
-        default: () => new Types.ObjectId()
-    },
     name: {
         type: String,
         required: 'Exercise must be named',
