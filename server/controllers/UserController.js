@@ -14,8 +14,8 @@ module.exports = {
     },
     async getSingleUser({ user = null, params }, res) {
         const foundUser = await User.findOne({
-            $or: [{ _id: user ? user._id : params.id }, { username: params.username }],
-        }).select("__v")
+            $or: [{ _id: user ? user._id : params.id }, { name: params.username }],
+        })
             .populate('templates')
             .populate('exercises')
             .populate('bodyParts')
@@ -43,12 +43,8 @@ module.exports = {
     },
     async login(req, res) {
         const user = await User.findOne({
-            $or: [{
-                username: req.body.username
-            }, {
-                email: req.body.email
-            }]
-        });
+                name: req.body.username
+            });
         if (!user) {
             return res.status(400).json({ message: "Can't find this user" });
         }
