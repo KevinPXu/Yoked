@@ -16,25 +16,25 @@ const userSchema = new Schema(
         templates: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'Template'
+                ref: 'template'
             }
         ],
         exercises: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'Exercise'
+                ref: 'exercise'
             }
         ],
         bodyParts: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'BodyPart'
+                ref: 'bodyPart'
             }
         ],
         history: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'History'
+                ref: 'history'
             }
         ],
         loggedIn: {

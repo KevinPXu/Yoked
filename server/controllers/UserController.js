@@ -16,7 +16,7 @@ module.exports = {
         const foundUser = await User.findOne({
             $or: [{ _id: user ? user._id : params.id }, { username: params.username }],
         }).select("__v")
-            .populate('template')
+            .populate('templates')
             .populate('exercises')
             .populate('bodyParts')
             .populate('history');
@@ -44,16 +44,16 @@ module.exports = {
     async login(req, res) {
         const user = await User.findOne({
             $or: [{
-                username: body.username
+                username: req.body.username
             }, {
-                email: body.email
+                email: req.body.email
             }]
         });
         if (!user) {
             return res.status(400).json({ message: "Can't find this user" });
         }
 
-        const correctPw = await user.isCorrectPassword(body.password);
+        const correctPw = await user.isCorrectPassword(req.body.password);
 
         if (!correctPw) {
             return res.status(400).json({ message: "Wrong password!" });
