@@ -21,7 +21,7 @@ module.exports = {
         const newHistory = await History.create(req.body);
         const updatedUser = await User.findOneAndUpdate(
             { _id: req.user._id },
-            { $push: { history: newHistory.historyId } },
+            { $push: { history: newHistory._id } },
             { new: true }
         );
         !updatedUser 

@@ -1,10 +1,6 @@
 const { Schema, model, Types } = require("mongoose");
 
 const historySchema = new Schema({
-  historyId: {
-    type: Schema.Types.ObjectId,
-    default: () => new Types.ObjectId(),
-  },
   exercises: [
     {
       type: Schema.Types.ObjectId,
