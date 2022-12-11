@@ -1,10 +1,12 @@
 const { History, User } = require('../models/');
 
 module.exports = {
-    // if history is changed to be subdoc of User, getHistory would be the same as getSingleUser
-    // async getHistory(req, res) { },
-
     // route probably needs to be /users/:userId/history
+    async getHistory(req, res) {
+        
+     },
+
+    // POST to /users/:userId/history
     async saveToHistory(req, res) {
         const updatedUser = await User.findOneAndUpdate(
             { _id: req.params.userId },
@@ -12,11 +14,15 @@ module.exports = {
             { runValidators: true, new: true }
         );
         !updatedUser 
-            ? res.status(404).json({ message: `No user found with that ID!` })
+            ? res.status(404).json({ message: `Couldn't find a user with that ID!` })
             : res.json(updatedUser);
     },
 
+    // /users/:userId/history/:historyId
     async getSingleHistory(req, res) {
-        
+        const history = await History.findOne({ historyId: req.params.historyId });
+        !history
+            ? res.status(404).json({ message: `Couldn't find a history with that ID!`})
+            : res.json(history);
     }
 }
