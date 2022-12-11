@@ -3,7 +3,11 @@ const { History, User } = require('../models/');
 module.exports = {
     // route probably needs to be /users/:userId/history
     async getHistory(req, res) {
-        
+        const userHistory = await User.find({ _id: req.params.userId })
+            .populate('history');
+        !history
+            ? res.status(404).json({ message: `Couldn't find a user with that ID!`})
+            : res.json(userHistory);
      },
 
     // POST to /users/:userId/history
