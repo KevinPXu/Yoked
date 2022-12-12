@@ -1,9 +1,5 @@
-// import React from "react";
-// import PortfolioContainer from "./components/PortfolioContainer";
-
-// const App = () => <PortfolioContainer />;
-
-// export default App;
+import React from "react";
+import Template from "./components/pages/Templates";
 
 import Login from './pages/Login'
 
