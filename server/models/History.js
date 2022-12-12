@@ -4,18 +4,18 @@ const historySchema = new Schema({
   exercises: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'exercise'
+      ref: 'exercise',
+      required: true
     }
   ],
-  Date: {
-    type: Date,
+  length: {
+    type: Number,
     required: true,
   },
-  Length: {
-    type: Number,
-    require: true,
-  },
-});
+}, {
+  timestamps: true
+}
+);
 
 const History = model("history", historySchema);
 
