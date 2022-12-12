@@ -1,5 +1,5 @@
 const connection = require('../config/connection');
-const { Exercise, BodyPart } = require('../models')
+const { Exercise, BodyPart, Template, User   } = require('../models')
 
 
 const axios = require("axios");
@@ -12,17 +12,25 @@ connection.once('open', async () => {
     console.log('open')
     await Exercise.deleteMany({});
     await BodyPart.deleteMany({});
-    
+    await User.deleteMany({});
+    await Template.deleteMany({});
+
+    let count = 0;       
+    let template = {name: 'template', exercises:[]}
     for (exercise of exerciseData) {
         const bpExists = await BodyPart.findOne({ name: exercise.target })
         if (!bpExists) {
-            console.log("first instance: " + exercise.target)
             newBodyPart = await BodyPart.create({ name: exercise.target })
-            console.log(newBodyPart)
         }
         const newId = bpExists ? bpExists._id : newBodyPart._id
         newExercise = await Exercise.create({name: exercise.name, bodyParts : newId, sets: 10, reps: 10})
+        if (count < 4) {
+            template.exercises.push(newExercise._id)
+        }
+        count++
     }
+    const newTemplate = await Template.create(template)
+    await User.create({name: "user", password: "password", templates: [newTemplate._id], loggedIn: true})
     process.exit(0)
 });
 
