@@ -3,7 +3,7 @@ const { History, User } = require('../models/');
 module.exports = {
     // GET to /users/:userId/history
     async getHistory(req, res) {
-        const userHistory = await User.find({ _id: req.user._id })
+        const userHistory = await User.findOne({ _id: req.user._id })
             .populate({
                 path: 'history',
                 populate: {
@@ -11,9 +11,9 @@ module.exports = {
                     model: 'exercise'
                 }
             });
-        !history
+        !userHistory
             ? res.status(404).json({ message: `Couldn't find a user with that ID!`})
-            : res.json(userHistory);
+            : res.json(userHistory.history);
      },
 
     // POST to /users/:userId/history
@@ -31,7 +31,7 @@ module.exports = {
 
     // GET to /users/:userId/history/:historyId
     async getSingleHistory(req, res) {
-        const history = await History.findOne({ historyId: req.params.historyId })
+        const history = await History.findOne({ _id: req.params.historyId })
             .populate('exercises');
         !history
             ? res.status(404).json({ message: `Couldn't find a history with that ID!`})

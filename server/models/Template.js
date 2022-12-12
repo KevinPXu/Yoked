@@ -6,15 +6,12 @@ const templateSchema = new Schema ({
         type: String,
         required: true
     },
-    id: {
-        required: true,
-        type: String
-    },
-    exercises: {
-        type: String,
-        required: true
-
-    },
+    exercises: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'exercise'
+        }
+    ],
 });
 
 const Template = model('template', templateSchema);

@@ -10,7 +10,7 @@ const {
 
 const { authMiddleware } = require('../../utils/auth');
 
-router.route('/').get(getTemplates).post(createTemplate);
+router.route('/').get(getTemplates).post(authMiddleware, createTemplate);
 
 router.route('/:id').get(authMiddleware, getSpecificTemplate).put(updateTemplate).delete(authMiddleware, deleteTemplate);
 
