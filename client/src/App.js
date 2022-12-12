@@ -1,6 +1,6 @@
-// import React from "react";
-// import PortfolioContainer from "./components/PortfolioContainer";
+import React from "react";
+import Template from "./components/pages/Templates";
 
-// const App = () => <PortfolioContainer />;
+const App = () => ;
 
-// export default App;
+export default App;

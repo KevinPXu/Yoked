@@ -9,5 +9,5 @@ router.use('/user', userRoutes);
 router.use('/template', templateRoutes);
 router.use('/bodyparts', bodyPartRoutes)
 router.use('/exercises', exerciseRoutes)
-
 module.exports = router;
+
