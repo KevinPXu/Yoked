@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ModalComponent from '../ModalComponent';
+import ModalComponent from '../components/ModalComponent';
 import { Button, Grid } from '@mui/material';
 
 export default function Template() {
