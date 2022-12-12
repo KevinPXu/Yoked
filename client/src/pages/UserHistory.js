@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import fetchHistory from '../utils/API';
+import Auth from '../utils/auth';
 
 const UserHistory = () => {
     const [historyData, setHistoryData] = useState({});
+
+    const historyDataLength = Object.keys(historyData).length;
 
     useEffect(() => {
         const getHistoryData = async () => {
@@ -21,8 +25,9 @@ const UserHistory = () => {
             } catch (err) {
                 console.log(err);
             }
-        }
-    })
+        };
+        getHistoryData();
+    },[historyDataLength]);
 
 
     return (
