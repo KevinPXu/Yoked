@@ -1,4 +1,4 @@
-const { Template } = require('../models');
+const { Template, User } = require('../models');
 
 module.exports = {
     getTemplates(req, res) {
@@ -7,7 +7,7 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     },
     getSpecificTemplate(req, res) {
-        Template.findOne({ _id: req.params.templateId })
+        Template.findOne({ _id: req.params.id })
         .then((template) => 
         !template
           ? res.status(404).json({ message: 'No template with this ID!' })
@@ -19,7 +19,7 @@ module.exports = {
         Template.create(req.body)
         .then((template) => {
             return User.findOneAndUpdate(
-                { _id: req.body.userId },
+                { _id: req.user._id },
                 { $addToSet: { templates: template._id } },
                 { new: true }
             );

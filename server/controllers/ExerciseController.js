@@ -25,8 +25,8 @@ module.exports = {
         res.json(exercise)
     },
     async getSingleExercise(req, res) {
-        const foundExercise = await Exercise.findOne({_id: req.params.id});
-        if (!foundBodyPart) {
+        const foundExercise = await Exercise.findOne({_id: req.params.id}).populate('bodyParts');
+        if (!foundExercise) {
             return res.status(400).json({
                 message: "cannot find exercise with id"
             })
@@ -36,7 +36,8 @@ module.exports = {
     async updateExercise(req, res) {
         const updatedExercise = await Exercise.findOneAndUpdate(
             { _id: req.params.id },
-            { ...req.body }
+            { ...req.body },
+            { new: true}
         )
         !updatedExercise
             ? res.status(404).json({ message: `Couldn't find an exercise with that ID!` })
