@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/KevinPXu/Yoked/issues"
   },
-  "homepage": "https://github.com/KevinPXu/Yoked#readme"
+  "homepage": "https://github.com/KevinPXu/Yoked#readme",
+  "dependencies": {
+    "jwt-decode": "^3.1.2"
+  }
 }
