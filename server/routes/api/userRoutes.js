@@ -1,16 +1,16 @@
-const router = require("express").Router();
+const router = require('express').Router();
 
 const {
-    getUsers,
-    getSingleUser,
-    createUser,
-    login
+  getUsers,
+  getSingleUser,
+  createUser,
+  login,
 } = require('../../controllers/UserController');
 
 const {
-    getHistory,
-    saveToHistory,
-    getSingleHistory
+  getHistory,
+  saveToHistory,
+  getSingleHistory,
 } = require('../../controllers/HistoryController');
 
 const { authMiddleware } = require('../../utils/auth');
