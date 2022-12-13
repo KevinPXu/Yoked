@@ -1,27 +1,30 @@
 import React from 'react';
-import Template from './pages/Templates';
+import Header from './components/Header';
 
-const App = () => <Template />;
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login'
+import UserHistory from './pages/UserHistory'
+import Templates from './pages/Templates';
 
-export default App;
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import Login from './pages/Login'
-// import UserHistory from './pages/UserHistory'
-
-// function App() {
-//   return (
-//     <Router>
-//             <main className="App">
-//       <Routes>
-//         <Route
-//           path="/"
-//           element={<Login />}
-//         />
-//         <Route
-//           path="/history"
-//           element={<UserHistory />}
-//         />
-//       </Routes>
+function App() {
+  return (
+    <Router>
+      <Header />
+      <main className="App">
+      <Routes>
+        <Route
+          path="/"
+          element={<Login />}
+        />
+        <Route
+          path="/history"
+          element={<UserHistory />}
+        />
+        <Route
+          path='/templates'
+          element={<Templates />}
+        />
+      </Routes>
 
 //       </main>
 //     </Router>
