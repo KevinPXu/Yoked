@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const Exercise = require('./Exercise');
+const Exercise = require('./ExerciseType');
 
 const templateSchema = new Schema ({
     name: {
@@ -12,6 +12,7 @@ const templateSchema = new Schema ({
             ref: 'exercise'
         }
     ],
+    default: {type: Boolean, default: false}
 });
 
 const Template = model('template', templateSchema);
