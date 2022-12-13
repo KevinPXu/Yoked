@@ -1,18 +1,19 @@
-import { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from '../context/AuthProvider';
+import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../utils/mutations';
 
-import axios from '../api/axios';
-const LOGIN_URl = '../auth';
+import Auth from "../utils/auth"
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext)
     const userRef = useRef();
     const errRef = useRef();
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
+
+    const [login, { error, data }] = useMutation(LOGIN_USER)
 
     useEffect(() => {
         userRef.current.focus();
@@ -24,22 +25,13 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
-            const response = await axios.post(LOGIN_URl, 
-                JSON.stringify({ user, pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            );
-            console.log(JSON.stringify(response?.data));
-            const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
-            setAuth({ user, pwd, roles, accessToken });
+            const { data } = await login({
+                variables: { name: user, password: pwd}
+            });
+            Auth.login(data.login.token)
             setUser('');
             setPwd('');
-            setSuccess(true);
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No server response!');
@@ -56,12 +48,12 @@ const Login = () => {
 
     return (
         <>
-            {success ? (
+            {data ? (
                 <section>
                     <h1>Logged In!</h1>
                     <br />
                     <p>
-                        <a href="#">Return To Home Page</a>
+                    <Link to="/">back to the homepage.</Link>
                     </p>
                 </section>
             ) : (
@@ -91,6 +83,11 @@ const Login = () => {
                 <button>Log In</button>
             </form>
 
+            {error && (
+              <div className="my-3 p-3 bg-danger text-white">
+                {error.message}
+              </div>
+            )}
         </section>
             )}
             </>
