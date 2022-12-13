@@ -7,9 +7,9 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-import Login from './pages/Login'
-import UserHistory from './pages/UserHistory'
+import Header from './components/Header';
+import Login from './pages/Login';
+import UserHistory from './pages/UserHistory';
 import Templates from './pages/Templates';
 
 const httpLink = createHttpLink({
@@ -21,38 +21,38 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : ''
-    }
-  }
-})
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
-})
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
     <ApolloProvider client={client}>
-     <Router>
-          <Header />
-          <main className='App'>
-            <Routes>
-              <Route
-                path='/'
-                element={<Login />}
-              />
-              <Route
-                path='/history'
-                element={<UserHistory />}
-              />
-              <Route
-                path='/templates'
-                element={<Templates />}
-              />
-            </Routes>
-          </main>
-        </Router>
+      <Router>
+        <Header />
+        <main className='App'>
+          <Routes>
+            <Route
+              path='/'
+              element={<Login />}
+            />
+            <Route
+              path='/history'
+              element={<UserHistory />}
+            />
+            <Route
+              path='/templates'
+              element={<Templates />}
+            />
+          </Routes>
+        </main>
+      </Router>
     </ApolloProvider>
   );
 }
