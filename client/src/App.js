@@ -1,17 +1,16 @@
 import React from 'react';
-import Template from './pages/Templates';
+import Header from './components/Header';
 
-// const App = () => <PortfolioContainer />;
-
-// export default App;
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login'
 import UserHistory from './pages/UserHistory'
+import Templates from './pages/Templates';
 
 function App() {
   return (
     <Router>
-            <main className="App">
+      <Header />
+      <main className="App">
       <Routes>
         <Route
           path="/"
@@ -20,6 +19,10 @@ function App() {
         <Route
           path="/history"
           element={<UserHistory />}
+        />
+        <Route
+          path='/templates'
+          element={<Templates />}
         />
       </Routes>
 
