@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import fetchHistory from '../utils/API';
 import Auth from '../utils/auth';
 
 const UserHistory = () => {
@@ -15,7 +14,7 @@ const UserHistory = () => {
                     return false
                 }
                 // need getHistory to be a fetch request in a utils directory
-                const response = await fetchHistory(token);
+                const response = "Wow";
                 if(!response.ok) {
                     throw new Error('Something went wrong');
                 }
