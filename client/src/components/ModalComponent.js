@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ExerciseComponent from './ExerciseComponent';
 import { Button, Dialog, DialogTitle, DialogContent } from '@mui/material';
 
 function ModalComponent({ closeTempModal, handleTempClose }) {
+  const [exerciseList, setExerciseList] = useState([]);
   // const style = {
   //   display: 'flex',
   //   flexDirection: 'column',
@@ -19,6 +20,9 @@ function ModalComponent({ closeTempModal, handleTempClose }) {
   //   boxShadow: 24,
   //   p: 4,
   // };
+  const handleAddExBtn = () => {
+    setExerciseList(exerciseList.concat(<ExerciseComponent />));
+  };
 
   const descriptionElementRef = React.useRef(null);
   React.useEffect(() => {
@@ -36,12 +40,16 @@ function ModalComponent({ closeTempModal, handleTempClose }) {
       onClose={handleTempClose}
       scroll={'paper'}>
       <DialogTitle>
-        <Button variant='contained'>Add new Exercise</Button>
+        <Button
+          variant='contained'
+          onClick={handleAddExBtn}>
+          Add new Exercise
+        </Button>
       </DialogTitle>
       <DialogContent
         dividers={true}
         ref={descriptionElementRef}>
-        <ExerciseComponent />
+        {exerciseList}
         <Button
           variant='contained'
           onClick={handleTempClose}>

@@ -4,6 +4,7 @@ import React from 'react';
 function ExerciseComponent() {
   return (
     <>
+      <h3>Exercise Title</h3>
       <Grid
         container
         spacing={2}
@@ -34,6 +35,7 @@ function ExerciseComponent() {
           <p>✓</p>
         </Grid>
       </Grid>
+      {/* TODO: May move to own component */}
       <Grid
         container
         spacing={2}
@@ -51,12 +53,12 @@ function ExerciseComponent() {
         <Grid
           item
           xs={2}>
-          <Input defaultValue={'lbs'} />
+          <Input placeholder={'lbs'} />
         </Grid>
         <Grid
           item
           xs={2}>
-          <Input defaultValue={'reps'} />
+          <Input placeholder={'reps'} />
         </Grid>
         <Grid
           item
