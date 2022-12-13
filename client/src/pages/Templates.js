@@ -3,9 +3,9 @@ import ModalComponent from '../components/ModalComponent';
 import { Button, Grid } from '@mui/material';
 
 export default function Template() {
-  const [openModal, setOpenModal] = useState(false);
-  const handleOpen = () => setOpenModal(true);
-  const handleClose = () => setOpenModal(false);
+  const [openTempModal, setOpenTempModal] = useState(false);
+  const handleTempOpen = () => setOpenTempModal(true);
+  const handleTempClose = () => setOpenTempModal(false);
 
   return (
     <div>
@@ -19,12 +19,12 @@ export default function Template() {
           <Button
             variant='contained'
             fullWidth={true}
-            onClick={handleOpen}>
+            onClick={handleTempOpen}>
             Create New Template
           </Button>
           <ModalComponent
-            handleClose={handleClose}
-            closeModal={openModal}
+            handleTempClose={handleTempClose}
+            closeTempModal={openTempModal}
           />
         </Grid>
       </Grid>
