@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import {
     Drawer,
     Box,
-    Typography,
-    IconButton
+    IconButton,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -17,17 +20,24 @@ export default function Nav() {
                 <MenuIcon />
             </IconButton>
             <Drawer
+                PaperProps={{ sx: {width: '200px' } }}
                 anchor='left'
                 open={isOpen}
                 onClose={() => setIsOpen(false)}
             >
                 <Box >
-                    <Typography variant='h6' component='div'>
-                        Templates
-                    </Typography>
-                    <Typography variant='h6' component='div'>
-                        History
-                    </Typography>
+                    <List>
+                        <ListItem>
+                            <ListItemButton component={RouterLink} to='/templates'>
+                                <ListItemText primary='Templates' />
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemButton component={RouterLink} to='/history'>
+                                <ListItemText primary='History' />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
                 </Box>
             </Drawer>
         </>
