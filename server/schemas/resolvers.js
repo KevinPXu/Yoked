@@ -33,7 +33,7 @@ const resolvers = {
                 .populate('exercises');
         },
         templates: async () => {
-            return Template.find()
+            return Template.find().populate('exercises')
         },
         template: async (parent, { _id }) => {
             return Template.findOne({ _id })
