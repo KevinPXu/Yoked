@@ -1,13 +1,20 @@
-import { Input, Button, Grid } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
+import { Button, Grid } from '@mui/material';
+import ExerciseSetComponent from './ExerciseSetComponent';
 
 function ExerciseComponent() {
+  const [totalSets, setTotalSets] = useState([]);
+
+  const handleAddSetBtn = () => {
+    setTotalSets(totalSets.concat(<ExerciseSetComponent />));
+  };
+
   return (
     <>
       <h3>Exercise Title</h3>
       <Grid
         container
-        spacing={2}
+        spacing={8}
         columns={13}>
         <Grid
           item
@@ -35,38 +42,12 @@ function ExerciseComponent() {
           <p>✓</p>
         </Grid>
       </Grid>
-      {/* TODO: May move to own component */}
-      <Grid
-        container
-        spacing={2}
-        columns={13}>
-        <Grid
-          item
-          xs={2}>
-          <p>1</p>
-        </Grid>
-        <Grid
-          item
-          xs={5}>
-          <p>Previous</p>
-        </Grid>
-        <Grid
-          item
-          xs={2}>
-          <Input placeholder={'lbs'} />
-        </Grid>
-        <Grid
-          item
-          xs={2}>
-          <Input placeholder={'reps'} />
-        </Grid>
-        <Grid
-          item
-          xs={1}>
-          <Button variant='contained'>✓</Button>
-        </Grid>
-      </Grid>
-      <Button variant='contained'>+ Add Set</Button>
+      {totalSets}
+      <Button
+        variant='contained'
+        onClick={handleAddSetBtn}>
+        + Add Set
+      </Button>
     </>
   );
 }
