@@ -7,7 +7,7 @@ function ExerciseComponent({ title }) {
   const [setArray, setSetArray] = useState([]);
 
   const handleAddSetBtn = () => {
-    setTotalSets(totalSets.concat(<ExerciseSetComponent setArray={setArray} setSetArray={setSetArray} />));
+    setTotalSets(totalSets.concat(<ExerciseSetComponent setArray={setArray} setSetArray={setSetArray} index={totalSets.length}/>));
   };
 
   return (
