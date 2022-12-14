@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import { QUERY_EXERCISE_TYPES, QUERY_USER } from '../utils/queries';
 import ModalComponent from '../components/ModalComponent';
 import { Button, Grid } from '@mui/material';
+import { TemplateProvider } from '../utils/TemplateContext';
 
 import Auth from "../utils/auth"
 
@@ -29,7 +30,7 @@ export default function Template() {
   const handleTempClose = () => setOpenTempModal(false);
 
   return (
-    <>
+    <TemplateProvider>
       <Button
         variant='contained'
         fullWidth={true}
@@ -52,6 +53,6 @@ export default function Template() {
             {templates}
         </Grid>
       </Grid>
-    </>
+    </TemplateProvider>
   );
 }

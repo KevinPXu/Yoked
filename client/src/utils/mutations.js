@@ -79,11 +79,11 @@ mutation RemoveExerciseType($id: ID!) {
 `;
 
 export const ADD_EXERCISE_INSTANCE = gql`
-mutation AddExerciseType($userId: ID!, $bodyParts: [ID]!, $name: String) {
-    addExerciseType(userId: $userId, bodyParts: $bodyParts, name: $name) {
-      _id
-    }
+mutation AddExerciseType($userId: ID!, $exerciseType: ID, $sets: [setInput]) {
+  addExerciseInstance(userId: $userId, exerciseType: $exerciseType, sets: $sets) {
+    _id
   }
+}
 `;
 
 export const UPDATE_EXERCISE_INSTANCE = gql`
