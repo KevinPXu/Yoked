@@ -1,9 +1,12 @@
 import React from 'react';
 import { Grid, Input, Button } from '@mui/material';
 
-function ExerciseSetComponent({ setArray, setSetArray, index }) {
+function ExerciseSetComponent({ title, setExerciseObject, exerciseObject, index, id }) {
   const [weightValue, setWeightValue] = React.useState('');
   const [repValue, setRepValue] = React.useState('');
+  if (!exerciseObject[id]) {
+    exerciseObject[id] = []
+  }
   console.log(index)
   return (
     <>
@@ -27,6 +30,7 @@ function ExerciseSetComponent({ setArray, setSetArray, index }) {
           <Input 
             placeholder={'lbs'} 
             value={weightValue}
+            type='number'
             onChange={ (e) => {
               setWeightValue(e.target.value)}
             }
@@ -38,6 +42,7 @@ function ExerciseSetComponent({ setArray, setSetArray, index }) {
           <Input 
             placeholder={'reps'} 
             value={repValue}
+            type='number'
             onChange={(e) => {
               setRepValue(e.target.value)}}
             />
@@ -47,9 +52,9 @@ function ExerciseSetComponent({ setArray, setSetArray, index }) {
           xs={1}>
           <Button variant='contained'
           onClick={(e) => {
-            setArray[index] = {weight: weightValue, reps: repValue}
-            setSetArray(setArray)
-            console.log(setArray)
+            exerciseObject[id][index] = {weight: Number(weightValue), reps: Number(repValue)}
+            setExerciseObject(exerciseObject)
+            console.log(exerciseObject)
           }}>✓</Button>
         </Grid>
       </Grid>

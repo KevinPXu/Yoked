@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Grid } from '@mui/material';
 import ExerciseSetComponent from './ExerciseSetComponent';
 
-function ExerciseComponent({ title }) {
+function ExerciseComponent({ title, setExerciseObject, exerciseObject, id}) {
   const [totalSets, setTotalSets] = useState([]);
-  const [setArray, setSetArray] = useState([]);
 
   const handleAddSetBtn = () => {
-    setTotalSets(totalSets.concat(<ExerciseSetComponent setArray={setArray} setSetArray={setSetArray} index={totalSets.length}/>));
+    setTotalSets(totalSets.concat(<ExerciseSetComponent id={id} setExerciseObject={setExerciseObject} exerciseObject={exerciseObject} title={title} index={totalSets.length}/>));
   };
 
   return (
