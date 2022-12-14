@@ -22,7 +22,7 @@ const userSchema = new Schema(
         exercises: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'exercise'
+                ref: 'exerciseType'
             }
         ],
         bodyParts: [

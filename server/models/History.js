@@ -1,6 +1,7 @@
 const { Schema, model, Types } = require("mongoose");
 
 const historySchema = new Schema({
+  templateId: { type: Schema.Types.ObjectId, ref:'template'},
   exercises: [
     {
       type: Schema.Types.ObjectId,

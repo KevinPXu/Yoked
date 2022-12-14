@@ -6,7 +6,7 @@ const typeDefs = gql`
     name: String
     password: String
     templates: [Template]!
-    exercises: [Exercise]!
+    exercises: [ExerciseType]!
     bodyParts: [BodyPart]!
     history: [History]!
     loggedIn: Boolean
@@ -15,23 +15,40 @@ const typeDefs = gql`
   type Template {
     _id: ID
     name: String
-    exercises: [Exercise]!
+    exercises: [ExerciseInstance]!
+    default: Boolean
   }
 
   type History {
+    templateId: ID
     _id: ID
-    exercises: [Exercise]
+    exercises: [ExerciseInstance]
     length: Int
     createdAt: String
     updatedAt: String
   }
 
-  type Exercise {
+  type ExerciseType {
     _id: ID
     name: String
     bodyParts: [BodyPart]!
-    sets: Int
+  }
+
+  type ExerciseInstance {
+    _id: ID
+    exerciseType: ExerciseType
+    sets: [Set]
+  }
+
+  type Set {
+    _id: ID
     reps: Int
+    weight: Int
+  }
+
+  input setInput {
+    reps: Int
+    weight: Int
   }
 
   type BodyPart {
@@ -51,8 +68,10 @@ const typeDefs = gql`
     history(historyId: ID!): History
     templates: [Template]
     template(_id: ID!): Template
-    exercises: [Exercise]
-    exercise(_id: ID!): Exercise
+    exerciseTypes: [ExerciseType]
+    exerciseType(_id: ID!): ExerciseType
+    exerciseInstances: [ExerciseInstance]
+    exerciseInstance(_id: ID!): ExerciseInstance
     bodyParts: [BodyPart]
     bodyPart(_id: ID!): BodyPart
   }
@@ -60,13 +79,16 @@ const typeDefs = gql`
   type Mutation {
     addUser(name: String!, password: String!): Auth
     login(name: String!, password: String!): Auth
-    addHistory(userId: ID!, exercises: [ID], length: Int): History
+    addHistory(userId: ID!, templateId: ID!, exercises: [ID], length: Int): History
     addTemplate(userId: ID!, name: String, exercises: [ID]!): Template
     updateTemplate(_id: ID!, name: String!, exercises: [ID]!): Template
     removeTemplate(_id: ID!): Template
-    addExercise(userId: ID!, name: String, bodyParts: [ID]!, sets: Int, reps: Int): Exercise
-    updateExercise(_id: ID!, name: String!, bodyParts: [ID]!, sets: Int, reps: Int): Exercise
-    removeExercise(_id: ID!): Exercise
+    addExerciseType(userId: ID!, name: String, bodyParts: [ID]!): ExerciseType
+    updateExerciseType(_id: ID!, name: String!, bodyParts: [ID]!): ExerciseType
+    removeExerciseType(_id: ID!): ExerciseType
+    addExerciseInstance(userId: ID!, exerciseType: ID, sets: [setInput]): ExerciseInstance
+    updateExerciseInstance(_id: ID!, sets: [setInput]): ExerciseInstance
+    removeExerciseInstance(_id: ID!): ExerciseInstance
     addBodyPart(userId: ID!, name: String): BodyPart
     updateBodyPart(_id: ID!, name: String): BodyPart
     removeBodyPart(_id: ID!): BodyPart

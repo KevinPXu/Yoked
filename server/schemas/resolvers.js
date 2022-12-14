@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Template, History, Exercise, BodyPart } = require('../models');
+const { User, Template, History, ExerciseType, BodyPart, ExerciseInstance } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -33,16 +33,22 @@ const resolvers = {
                 .populate('exercises');
         },
         templates: async () => {
-            return Template.find()
+            return Template.find().populate('exercises')
         },
         template: async (parent, { _id }) => {
             return Template.findOne({ _id })
         },
-        exercises: async () => {
-            return Exercise.find()
+        exerciseTypes: async () => {
+            return ExerciseType.find()
         },
-        exercise: async (parent, { _id }) => {
-            return Exercise.findOne({ _id })
+        exerciseType: async (parent, { _id }) => {
+            return ExerciseType.findOne({ _id })
+        },
+        exerciseInstances: async() => {
+            return ExerciseInstance.find()
+        },
+        exerciseInstance: async() => {
+            return ExerciseInstance.findOne( { _id })
         },
         bodyParts: async () => {
             return BodyPart.find()
@@ -54,7 +60,8 @@ const resolvers = {
 
     Mutation: {
         addUser: async (parent, { name, password }) => {
-            const user = await User.create({ name, password, loggedIn: true });
+            const defaultTemplates = await Template.find( { default: true })
+            const user = await User.create({ name, password, loggedIn: true, templates: defaultTemplates.map((elem) => elem._id)});
             const token = signToken(user);
             return { token, user };
         },
@@ -109,8 +116,8 @@ const resolvers = {
             )
             return removed
         },
-        addExercise: async (parent, { userId, name, bodyParts, sets, reps }) => {
-            const exercise = await Exercise.create({name, bodyParts, sets, reps});
+        addExerciseType: async (parent, { userId, name, bodyParts}) => {
+            const exercise = await ExerciseType.create({name, bodyParts});
             const updatedUser = await User.findOneAndUpdate(
                 { _id: userId },
                 { $push: { exercises: exercise._id } },
@@ -118,21 +125,36 @@ const resolvers = {
             )
             return exercise
         },
-        updateExercise: async (parent, { _id, name, bodyParts, sets, reps }) => {
-            return Exercise.findOneAndUpdate(
+        updateExerciseType: async (parent, { _id, name, bodyParts, sets, reps }) => {
+            return ExerciseType.findOneAndUpdate(
                 { _id },
                 { name, bodyParts, sets, reps },
                 { runValidators: true, new: true }
             )
         },
-        removeExercise: async (parent, { _id }) => {
-            const removed = await Exercise.findOneAndDelete({ _id });
+        removeExerciseType: async (parent, { _id }) => {
+            const removed = await ExerciseType.findOneAndDelete({ _id });
             await User.findOneAndUpdate(
                 { exercises: _id },
                 { $pull: { exercises: _id } },
                 { new: true }
             )
             return removed
+        },
+        addExerciseInstance: async (parent, { userId, exerciseType, sets }) => {
+            const exerciseInstance = await ExerciseInstance.create({userId, exerciseType, sets})
+            return exerciseInstance
+        },
+        updateExerciseInstance: async (parent, { _id, sets }) => {
+            return ExerciseInstance.findOneAndUpdate(
+                { _id },
+                { sets },
+                { runValidators: true, new: true }
+            )
+        },
+        removeExerciseInstance: async (parent, { _id }) => {
+            const removed = await ExerciseInstance.findOneAndDelete({ _id });
+            return removed;
         },
         addBodyPart: async (parent, { userId, name }) => {
             const bodyPart = await BodyPart.create({name});

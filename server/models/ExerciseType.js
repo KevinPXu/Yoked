@@ -11,17 +11,9 @@ const exerciseSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'bodyPart'
         }
-    ],
-    sets: {
-        type: Number,
-        required: true
-    },
-    reps: {
-        type: Number,
-        required: true
-    },
+    ]
 })
 
-const Exercise = model('exercise', exerciseSchema)
+const ExerciseType = model('exerciseType', exerciseSchema)
 
-module.exports = Exercise;
+module.exports = ExerciseType;
