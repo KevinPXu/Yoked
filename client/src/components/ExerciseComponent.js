@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Grid } from '@mui/material';
 import ExerciseSetComponent from './ExerciseSetComponent';
 
-function ExerciseComponent() {
+function ExerciseComponent({ title }) {
   const [totalSets, setTotalSets] = useState([]);
 
   const handleAddSetBtn = () => {
@@ -11,7 +11,7 @@ function ExerciseComponent() {
 
   return (
     <>
-      <h3>Exercise Title</h3>
+      <h3>{title}</h3>
       <Grid
         container
         spacing={8}

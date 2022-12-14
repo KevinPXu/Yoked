@@ -77,14 +77,16 @@ query History($historyId: ID!) {
 `;
 
 export const QUERY_TEMPLATES = gql`
-  query templates {
-    templates {
-      exercises {
-        _id
-        name
-      }
+query Templates {
+  templates {
+    _id
+    default
+    exercises {
+      _id
     }
+    name
   }
+}
 `;
 
 export const QUERY_TEMPLATE = gql`

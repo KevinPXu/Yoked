@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { QUERY_TEMPLATES } from '../utils/queries';
+import { QUERY_EXERCISE_TYPES, QUERY_TEMPLATES } from '../utils/queries';
 import ModalComponent from '../components/ModalComponent';
 import { Button, Grid } from '@mui/material';
 
 export default function Template() {
-  const { loading, data } = useQuery(QUERY_TEMPLATES, {
-    fetchPolicy: 'no-cache',
-  });
+  const { loading, data } = useQuery(QUERY_EXERCISE_TYPES);
   console.log(loading);
-  console.log(data);
+  if (data) {
+    localStorage.setItem('exercises', JSON.stringify(data))
+  }
+  console.log(JSON.parse(localStorage.getItem('exercises')))
   const [openTempModal, setOpenTempModal] = useState(false);
   const handleTempOpen = () => setOpenTempModal(true);
   const handleTempClose = () => setOpenTempModal(false);
