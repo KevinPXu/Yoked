@@ -3,7 +3,7 @@ import ExerciseComponent from './ExerciseComponent';
 import ExerciseModal from './ExerciseModal'
 import { Button, Dialog, DialogTitle, DialogContent } from '@mui/material';
 
-function ModalComponent({ closeTempModal, handleTempClose }) {
+function ModalComponent({ closeTempModal, handleTempClose, searchList }) {
   const [exerciseList, setExerciseList] = useState([]);
   const [openExerciseModal, setExerciseModalOpen] = React.useState(false);
 
@@ -23,7 +23,7 @@ function ModalComponent({ closeTempModal, handleTempClose }) {
 
   return (
     <div>
-    <ExerciseModal  open={openExerciseModal} close={() => setExerciseModalOpen(false)} handleSubmit= {(title) => setExerciseList(exerciseList.concat(<ExerciseComponent title={title}/>)) }/>
+    <ExerciseModal  open={openExerciseModal} close={() => setExerciseModalOpen(false)} searchList={searchList} handleSubmit= {(title) => setExerciseList(exerciseList.concat(<ExerciseComponent title={title}/>)) }/>
     <Dialog
       open={closeTempModal}
       onClose={handleTempClose}
