@@ -3,27 +3,31 @@ import { useQuery } from '@apollo/client';
 import { QUERY_EXERCISE_TYPES, QUERY_USER } from '../utils/queries';
 import ModalComponent from '../components/ModalComponent';
 import { Button, Grid } from '@mui/material';
+import TemplateBtns, { templateBtns } from '../components/TemplateBtns';
 
-import Auth from "../utils/auth"
+import Auth from '../utils/auth';
 
 export default function Template() {
   const { loading, data } = useQuery(QUERY_EXERCISE_TYPES);
   const templateResult = useQuery(QUERY_USER, {
-    variables: {id: Auth.getProfile().data._id}
-  })
-  console.log(Auth.getProfile().data._id)
+    variables: { id: Auth.getProfile().data._id },
+  });
+  console.log(Auth.getProfile().data._id);
 
-
-  const templates = []
-  templateResult.data?.user?.templates?.map((elem) => templates.push(          <Button
-    variant='contained'
-    sx={{ bgcolor: 'white', color: 'black' }}
-    key={elem.name}>
-    {elem.name}
-  </Button>))
-  console.log(templateResult.loading)
-  console.log(templateResult.data?.user?.templates)
-  console.log(templates)
+  const templates = [];
+  templateResult.data?.user?.templates?.map((elem) =>
+    templates.push(
+      <Button
+        variant='contained'
+        sx={{ bgcolor: 'white', color: 'black' }}
+        key={elem.name}>
+        {elem.name}
+      </Button>
+    )
+  );
+  console.log(templateResult.loading);
+  console.log(templateResult.data?.user?.templates);
+  console.log(templates);
   const [openTempModal, setOpenTempModal] = useState(false);
   const handleTempOpen = () => setOpenTempModal(true);
   const handleTempClose = () => setOpenTempModal(false);
@@ -41,6 +45,7 @@ export default function Template() {
         closeTempModal={openTempModal}
         searchList={data}
       />
+      <TemplateBtns />
       <Grid
         container
         my={4}
@@ -49,7 +54,7 @@ export default function Template() {
         <Grid
           item
           xs={1}>
-            {templates}
+          {templates}
         </Grid>
       </Grid>
     </>
