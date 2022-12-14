@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { QUERY_TEMP } from '../utils/queries';
+import { QUERY_TEMPLATES } from '../utils/queries';
 import ModalComponent from '../components/ModalComponent';
 import { Button, Grid } from '@mui/material';
 
 export default function Template() {
-  const { loading, data } = useQuery(QUERY_TEMP, {
+  const { loading, data } = useQuery(QUERY_TEMPLATES, {
     fetchPolicy: 'no-cache',
   });
   console.log(loading);
