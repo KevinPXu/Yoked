@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import ExerciseComponent from './ExerciseComponent';
 import ExerciseModal from './ExerciseModal'
-import { Button, Dialog, DialogTitle, DialogContent } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, Divider, Input } from '@mui/material';
 
 function ModalComponent({ closeTempModal, handleTempClose, searchList }) {
   const [exerciseList, setExerciseList] = useState([]);
-  const [openExerciseModal, setExerciseModalOpen] = React.useState(false);
+  const [openExerciseModal, setExerciseModalOpen] = useState(false);
+  const [templateTitle, setTemplateTitle] = useState('');
 
   const handleAddExBtn = () => {
     setExerciseList(exerciseList.concat(<ExerciseComponent />));
@@ -29,11 +30,17 @@ function ModalComponent({ closeTempModal, handleTempClose, searchList }) {
       onClose={handleTempClose}
       scroll={'paper'}>
       <DialogTitle>
-        <Button
+        <Input
+          placeholder={'Template Name'}
+          value={templateTitle}
+          onChange={(e) => setTemplateTitle(e.target.value)}
+        />
+        <Divider />
+        {/* <Button
           variant='contained'
           onClick={handleAddExBtn}>
           Add new Exercise
-        </Button>
+        </Button> */}
         <Button
               variant="contained"
               onClick={() => {
@@ -47,9 +54,16 @@ function ModalComponent({ closeTempModal, handleTempClose, searchList }) {
         dividers={true}
         ref={descriptionElementRef}>
         {exerciseList}
+        <Divider />
         <Button
           variant='contained'
           onClick={handleTempClose}>
+            Create Template
+          </Button>
+        <Button
+          variant='contained'
+          onClick={handleTempClose}
+        >
           Close
         </Button>
       </DialogContent>

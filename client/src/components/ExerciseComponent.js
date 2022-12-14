@@ -4,9 +4,10 @@ import ExerciseSetComponent from './ExerciseSetComponent';
 
 function ExerciseComponent({ title }) {
   const [totalSets, setTotalSets] = useState([]);
+  const [setArray, setSetArray] = useState([]);
 
   const handleAddSetBtn = () => {
-    setTotalSets(totalSets.concat(<ExerciseSetComponent />));
+    setTotalSets(totalSets.concat(<ExerciseSetComponent setArray={setArray} setSetArray={setSetArray} />));
   };
 
   return (

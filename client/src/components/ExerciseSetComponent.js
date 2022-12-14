@@ -1,7 +1,9 @@
 import React from 'react';
 import { Grid, Input, Button } from '@mui/material';
 
-function ExerciseSetComponent() {
+function ExerciseSetComponent({ setArray, setSetArray }) {
+  const [weightValue, setWeightValue] = React.useState('');
+  const [repValue, setRepValue] = React.useState('');
   return (
     <>
       <Grid
@@ -21,12 +23,22 @@ function ExerciseSetComponent() {
         <Grid
           item
           xs={2}>
-          <Input placeholder={'lbs'} />
+          <Input 
+            placeholder={'lbs'} 
+            value={weightValue}
+            onChange={(e) => {setWeightValue(e.target.value)}}
+          />
         </Grid>
         <Grid
           item
           xs={2}>
-          <Input placeholder={'reps'} />
+          <Input 
+            placeholder={'reps'} 
+            value={repValue}
+            onChange={(e) => {
+              setRepValue(e.target.value)
+              setSetArray()}}
+            />
         </Grid>
         <Grid
           item
