@@ -8201,7 +8201,7 @@ const data = [
         "equipment": "leverage machine",
         "gifUrl": "http://d205bpvrqc9yn1.cloudfront.net/0576.gif",
         "id": "0576",
-        "name": "lever chest press ",
+        "name": "lever chest press",
         "target": "pectorals"
     },
     {

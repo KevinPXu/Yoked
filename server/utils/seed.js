@@ -16,20 +16,27 @@ connection.once('open', async () => {
     await User.deleteMany({});
     await Template.deleteMany({});
 
-    let count = 0;       
+    let count = 0;
+    let tracker = {}       
     let template = {name: 'template', exercises:[], default: true}
     for (exercise of exerciseData) {
-        const bpExists = await BodyPart.findOne({ name: exercise.target })
-        if (!bpExists) {
-            newBodyPart = await BodyPart.create({ name: exercise.target })
+        if (tracker[exercise.name]){
+            console.log('duplicate')
+        } else {
+            tracker[exercise.name] = true
+            const bpExists = await BodyPart.findOne({ name: exercise.target })
+            if (!bpExists) {
+                newBodyPart = await BodyPart.create({ name: exercise.target })
+            }
+            const newId = bpExists ? bpExists._id : newBodyPart._id
+            newExercise = await ExerciseType.create({name: exercise.name, bodyParts : newId});
+            if (count < 4) {
+                const newExerciseInstance = await ExerciseInstance.create({exerciseType: newExercise, sets: [{reps: 10, weight: 100}]})
+                template.exercises.push(newExerciseInstance._id)
+            }
+            count++
         }
-        const newId = bpExists ? bpExists._id : newBodyPart._id
-        newExercise = await ExerciseType.create({name: exercise.name, bodyParts : newId});
-        if (count < 4) {
-            const newExerciseInstance = await ExerciseInstance.create({exerciseType: newExercise, sets: [{reps: 10, weight: 100}]})
-            template.exercises.push(newExerciseInstance._id)
-        }
-        count++
+
     }
     const newTemplate = await Template.create(template)
     await User.create({name: "user", password: "password", templates: [newTemplate._id], loggedIn: true})
