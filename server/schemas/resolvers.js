@@ -92,10 +92,12 @@ const resolvers = {
             return newHistory
         },
         addTemplate: async (parent, { userId, name, exercises }) => {
+            console.log(userId)
             const newTemplate = await Template.create({ name, exercises })
+            console.log(newTemplate)
             await User.findOneAndUpdate(
                 { _id: userId },
-                { $push: { history: newTemplate._id } },
+                { $push: { templates: newTemplate._id } },
                 { new: true }
             )
             return newTemplate

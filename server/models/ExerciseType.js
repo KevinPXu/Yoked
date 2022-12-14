@@ -4,7 +4,8 @@ const exerciseSchema = new Schema({
     name: {
         type: String,
         required: 'Exercise must be named',
-        trim: true
+        trim: true,
+        unique: true
     },
     bodyParts: [
         {
