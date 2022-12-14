@@ -40,7 +40,7 @@ function App() {
         <main className='App'>
           <Routes>
             <Route
-              path='/'
+              path='/signup'
               element={<Signup />}
             />
             <Route

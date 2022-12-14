@@ -1,7 +1,11 @@
 import { useRef, useState, useEffect } from 'react';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from '../api/axios';
+import { useMutation } from '@apollo/client';
+import { ADD_USER } from '../utils/mutations';
+
+import Auth from '../utils/auth'
+
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -24,7 +28,8 @@ export default function Signup() {
     const [matchFocus, setMatchFocus] = useState(false);
 
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
+
+    const [addUser, { error, data }] = useMutation(ADD_USER)
 
     useEffect(() => {
         userRef.current.focus();
@@ -52,17 +57,10 @@ export default function Signup() {
             return;
         }
         try {
-            const response = await axios.post(SIGNUP_URL,
-                JSON.stringify({ user, pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            );
-            console.log(response?.data);
-            console.log(response?.accessToken);
-            console.log(JSON.stringify(response))
-            setSuccess(true);
+            const { data } = await addUser({
+                variables: { name: user, password: pwd}
+            });
+            Auth.login(data.addUser.token)
             setUser('');
             setPwd('');
             setMatchPwd('');
@@ -80,7 +78,7 @@ export default function Signup() {
 
     return (
         <>
-            {success ? (
+            {data ? (
                 <section>
                     <h1>Success!</h1>
                       <p>
@@ -168,10 +166,17 @@ export default function Signup() {
                     <p>
                         Already registered?<br />
                         <span className="line">
-                            <a href='http://localhost:3000/login'>Log In</a>
+                            <a href='/login'>Log In</a>
                         </span>
                     </p>
                 </section>
+            )}
+
+
+            {error && (
+              <div className="my-3 p-3 bg-danger text-white">
+                {error.message}
+              </div>
             )}
         </>
     );
