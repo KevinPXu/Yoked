@@ -24,9 +24,6 @@ export default function Template() {
   console.log(templateResult.loading)
   console.log(templateResult.data?.user?.templates)
   console.log(templates)
-  if (data) {
-    localStorage.setItem('exercises', JSON.stringify(data))
-  }
   const [openTempModal, setOpenTempModal] = useState(false);
   const handleTempOpen = () => setOpenTempModal(true);
   const handleTempClose = () => setOpenTempModal(false);
@@ -42,6 +39,7 @@ export default function Template() {
       <ModalComponent
         handleTempClose={handleTempClose}
         closeTempModal={openTempModal}
+        searchList={data}
       />
       <Grid
         container

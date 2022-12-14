@@ -8,9 +8,9 @@ import {
   Button
 } from '@mui/material';
 
-function ExerciseModal({ open, close, handleSubmit}) {
-  const exercises = JSON.parse(localStorage.getItem('exercises')).exerciseTypes
+function ExerciseModal({ open, close, handleSubmit, searchList}) {
   const [inputValue, setInputValue] = useState('');
+  console.log(searchList)
   return (
     <>
       <Dialog
@@ -27,7 +27,7 @@ function ExerciseModal({ open, close, handleSubmit}) {
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);
         }}
-        options={exercises.map((exercise) => exercise.name)}
+        options={searchList ?  searchList?.exerciseTypes?.map((exercise) => exercise.name): ['']}
         renderInput={(params) => <TextField {...params} label="freeSolo" />}
       />
               <Button
