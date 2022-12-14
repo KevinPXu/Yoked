@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import ExerciseComponent from './ExerciseComponent';
+import ExerciseModal from './ExerciseModal'
 import { Button, Dialog, DialogTitle, DialogContent } from '@mui/material';
 
 function ModalComponent({ closeTempModal, handleTempClose }) {
   const [exerciseList, setExerciseList] = useState([]);
+  const [openExerciseModal, setExerciseModalOpen] = React.useState(false);
 
   const handleAddExBtn = () => {
     setExerciseList(exerciseList.concat(<ExerciseComponent />));
@@ -20,6 +22,8 @@ function ModalComponent({ closeTempModal, handleTempClose }) {
   }, [closeTempModal]);
 
   return (
+    <div>
+    <ExerciseModal  open={openExerciseModal} close={() => setExerciseModalOpen(false)} handleSubmit= {(title) => setExerciseList(exerciseList.concat(<ExerciseComponent title={title}/>)) }/>
     <Dialog
       open={closeTempModal}
       onClose={handleTempClose}
@@ -30,6 +34,14 @@ function ModalComponent({ closeTempModal, handleTempClose }) {
           onClick={handleAddExBtn}>
           Add new Exercise
         </Button>
+        <Button
+              variant="contained"
+              onClick={() => {
+                setExerciseModalOpen(true);
+              }}
+            >
+              Add Exercise Dev
+            </Button>
       </DialogTitle>
       <DialogContent
         dividers={true}
@@ -42,7 +54,8 @@ function ModalComponent({ closeTempModal, handleTempClose }) {
         </Button>
       </DialogContent>
     </Dialog>
-  );
+    </div>
+      );
 }
 
 export default ModalComponent;

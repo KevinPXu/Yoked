@@ -3,42 +3,41 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  Button,
   Autocomplete,
+  TextField,
+  Button
 } from '@mui/material';
 
-function ExerciseModal() {
-  const [exDialogOpen, setExDialogOpen] = React.useState(false);
-  const handleExOpenBtn = () => {
-    setExDialogOpen(true);
-  };
-  const handleExCloseBtn = () => {
-    setExDialogOpen(true);
-  };
-  const descriptionElementRef = React.useRef(null);
-  React.useEffect(() => {
-    if (exDialogOpen) {
-      const { current: descriptionElement } = descriptionElementRef;
-      if (descriptionElement !== null) {
-        descriptionElement.focus();
-      }
-    }
-  }, [exDialogOpen]);
+function ExerciseModal({ open, close, handleSubmit}) {
+  const exercises = JSON.parse(localStorage.getItem('exercises')).exerciseTypes
+  const [inputValue, setInputValue] = useState('');
   return (
     <>
-      <Button
-        variant='contained'
-        onClick={handleExOpenBtn}>
-        Add Exercise Dev
-      </Button>
       <Dialog
-        open={exDialogOpen}
-        onclose={handleExCloseBtn}>
+        open={open}
+        onClose={close}>
         <DialogTitle>Chose an exercise below</DialogTitle>
         <DialogContent
-          dividers={true}
-          ref={descriptionElementRef}>
-          <Autocomplete></Autocomplete>
+          dividers={true}>
+      <Autocomplete
+        id="free-solo-demo"
+        freeSolo
+        autoSelect
+        inputValue={inputValue}
+        onInputChange={(event, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
+        options={exercises.map((exercise) => exercise.name)}
+        renderInput={(params) => <TextField {...params} label="freeSolo" />}
+      />
+              <Button
+              variant="contained"
+              onClick={() => {
+                handleSubmit(inputValue);
+              }}
+            >
+              Add Exercise Dev
+            </Button>
         </DialogContent>
       </Dialog>
     </>
