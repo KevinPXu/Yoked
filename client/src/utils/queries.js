@@ -41,6 +41,7 @@ query User($id: ID!) {
       password
       templates {
         _id
+        name
       }
     }
   }

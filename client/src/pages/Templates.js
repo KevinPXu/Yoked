@@ -1,16 +1,32 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { QUERY_EXERCISE_TYPES, QUERY_TEMPLATES } from '../utils/queries';
+import { QUERY_EXERCISE_TYPES, QUERY_USER } from '../utils/queries';
 import ModalComponent from '../components/ModalComponent';
 import { Button, Grid } from '@mui/material';
 
+import Auth from "../utils/auth"
+
 export default function Template() {
   const { loading, data } = useQuery(QUERY_EXERCISE_TYPES);
-  console.log(loading);
+  const templateResult = useQuery(QUERY_USER, {
+    variables: {id: Auth.getProfile().data._id}
+  })
+  console.log(Auth.getProfile().data._id)
+
+
+  const templates = []
+  templateResult.data?.user?.templates?.map((elem) => templates.push(          <Button
+    variant='contained'
+    sx={{ bgcolor: 'white', color: 'black' }}
+    key={elem.name}>
+    {elem.name}
+  </Button>))
+  console.log(templateResult.loading)
+  console.log(templateResult.data?.user?.templates)
+  console.log(templates)
   if (data) {
     localStorage.setItem('exercises', JSON.stringify(data))
   }
-  console.log(JSON.parse(localStorage.getItem('exercises')))
   const [openTempModal, setOpenTempModal] = useState(false);
   const handleTempOpen = () => setOpenTempModal(true);
   const handleTempClose = () => setOpenTempModal(false);
@@ -35,11 +51,7 @@ export default function Template() {
         <Grid
           item
           xs={1}>
-          <Button
-            variant='contained'
-            sx={{ bgcolor: 'white', color: 'black' }}>
-            Some Template Name
-          </Button>
+            {templates}
         </Grid>
       </Grid>
     </>
