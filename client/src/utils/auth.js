@@ -6,6 +6,10 @@ class AuthService {
         return !!token && !this.isTokenExpired(token);
     }
 
+    getProfile() {
+        return decode(this.getToken());
+    }
+    
     isTokenExpired(token) {
         try {
             const decoded = decode(token);
