@@ -93,14 +93,21 @@ query Templates {
 export const QUERY_TEMPLATE = gql`
 query Template($id: ID!) {
     template(_id: $id) {
-      _id
-      default
-      exercises {
         _id
+        exercises {
+          exerciseType {
+            _id
+            name
+          }
+          sets {
+            _id
+            reps
+            weight
+          }
+        }
+        name
       }
-      name
     }
-  }
 `;
 
 export const QUERY_EXERCISE_TYPES = gql`

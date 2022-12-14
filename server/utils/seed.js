@@ -16,11 +16,41 @@ connection.once('open', async () => {
     await User.deleteMany({});
     await Template.deleteMany({});
 
+    const pushTemplateExercises = [
+        "barbell bench press",
+        "dumbbell incline bench press",
+        "cable standing fly",
+        "cable standing pulldown (with rope)",
+        "dumbbell kickback",
+        "cable high pulley overhead tricep extension"
+    ]
+
+    const pullTemplateExercises = [
+        "barbell deadlift",
+        "barbell bent over row",
+        "cable rear delt row (with rope)",
+        "ez barbell curl",
+        "cable hammer curl (with rope)",
+        "dumbbell preacher curl"
+    ]
+
+    const legTemplateExercises = [
+        "barbell full squat",
+        "lever leg extension",
+        "lever seated hip abduction",
+        "lever standing calf raise",
+        "russian twist",
+        "twisted leg raise"
+    ]
+
     let count = 0;
-    let tracker = {}       
-    let template = {name: 'template', exercises:[], default: true}
+    let tracker = {}
+    let template = { name: 'template', exercises: [], default: true }
+    let pushTemplate = { name: 'Push', exercises: [], default: true }
+    let pullTemplate = { name: 'Pull', exercises: [], default: true }
+    let legTemplate = { name: 'Legs', exercises: [], default: true }
     for (exercise of exerciseData) {
-        if (tracker[exercise.name]){
+        if (tracker[exercise.name]) {
             console.log('duplicate')
         } else {
             tracker[exercise.name] = true
@@ -29,17 +59,30 @@ connection.once('open', async () => {
                 newBodyPart = await BodyPart.create({ name: exercise.target })
             }
             const newId = bpExists ? bpExists._id : newBodyPart._id
-            newExercise = await ExerciseType.create({name: exercise.name, bodyParts : newId});
+            newExercise = await ExerciseType.create({ name: exercise.name, bodyParts: newId });
             if (count < 4) {
-                const newExerciseInstance = await ExerciseInstance.create({exerciseType: newExercise, sets: [{reps: 10, weight: 100}]})
+                const newExerciseInstance = await ExerciseInstance.create({ exerciseType: newExercise, sets: [{ reps: 10, weight: 100 }] })
                 template.exercises.push(newExerciseInstance._id)
+            }
+            if (pushTemplateExercises.includes(exercise.name)) {
+                const newPushExerciseInstance = await ExerciseInstance.create({ exerciseType: newExercise, sets: [{ reps: 10, weight: 100 }] })
+                pushTemplate.exercises.push(newPushExerciseInstance._id)
+            }
+            if (pullTemplateExercises.includes(exercise.name)) {
+                const newPullExerciseInstance = await ExerciseInstance.create({ exerciseType: newExercise, sets: [{ reps: 10, weight: 100 }] })
+                pullTemplate.exercises.push(newPullExerciseInstance._id)
+            }
+            if (legTemplateExercises.includes(exercise.name)) {
+                const newLegExerciseInstance = await ExerciseInstance.create({ exerciseType: newExercise, sets: [{ reps: 10, weight: 100 }] })
+                legTemplate.exercises.push(newLegExerciseInstance._id)
             }
             count++
         }
 
     }
-    const newTemplate = await Template.create(template)
-    await User.create({name: "user", password: "password", templates: [newTemplate._id], loggedIn: true})
+    const createdTemplates = await Template.insertMany([template, pushTemplate, pullTemplate, legTemplate])
+    console.log(createdTemplates)
+    await User.create({ name: "user", password: "password", templates: createdTemplates.map((elem) => elem._id), loggedIn: true })
     process.exit(0)
 });
 

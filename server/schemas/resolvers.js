@@ -5,16 +5,54 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
     Query: {
         users: async () => {
-            return User.find()
+            return User.find()            
+            .populate('templates')
+            .populate('exercises')
+            .populate('bodyParts')
+            .populate('history')
+            .populate({
+                path: 'templates',
+                populate: {
+                    path: 'exercises',
+                    model: 'exercise'
+                }
+            })
+            .populate({
+                path: 'templates',
+                populate: {
+                    path: 'exercises',
+                    populate: {
+                        path:'exerciseType',
+                        model: 'exerciseType'
+                    }
+                }
+            });
         },
         user: async (parent, { _id }) => {
             return User.findOne({
                 _id: _id
             })
-                .populate('templates')
-                .populate('exercises')
-                .populate('bodyParts')
-                .populate('history');
+            .populate('templates')
+            .populate('exercises')
+            .populate('bodyParts')
+            .populate('history')
+            .populate({
+                path: 'templates',
+                populate: {
+                    path: 'exercises',
+                    model: 'exercise'
+                }
+            })
+            .populate({
+                path: 'templates',
+                populate: {
+                    path: 'exercises',
+                    populate: {
+                        path:'exerciseType',
+                        model: 'exerciseType'
+                    }
+                }
+            });
 
         },
         historys: async (parent, { userId }) => {
@@ -33,10 +71,22 @@ const resolvers = {
                 .populate('exercises');
         },
         templates: async () => {
-            return Template.find().populate('exercises')
+            return Template.find().populate({
+                path: 'exercises',
+                populate: {
+                    path: 'exerciseType',
+                    model: 'exerciseType'
+                }
+            });
         },
         template: async (parent, { _id }) => {
-            return Template.findOne({ _id })
+            return Template.findOne({ _id }).populate({
+                path: 'exercises',
+                populate: {
+                    path: 'exerciseType',
+                    model: 'exerciseType'
+                }
+            });
         },
         exerciseTypes: async () => {
             return ExerciseType.find()
