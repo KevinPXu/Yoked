@@ -7,11 +7,14 @@ import {
   TextField,
   Button
 } from '@mui/material';
+import { useTemplateContext } from '../utils/TemplateContext';
+import ExerciseComponent  from './ExerciseComponent'
 
-function ExerciseModal({ open, close, handleSubmit, searchList}) {
+function ExerciseModal({ open, close, searchList, setExerciseList, exerciseList}) {
   const [inputValue, setInputValue] = useState('');
   const [selectedOption, setSelectedOption] = useState({})
-  console.log(searchList)
+  const { template, addName, addExercises } = useTemplateContext()
+
   return (
     <>
       <Dialog
@@ -39,8 +42,9 @@ function ExerciseModal({ open, close, handleSubmit, searchList}) {
               <Button
               variant="contained"
               onClick={() => {
-                console.log(inputValue)
-                handleSubmit(selectedOption);
+                let object ={...template.exercises}
+                object[selectedOption.id] = { name: selectedOption.label, sets: []}
+                addExercises(object);
               }}
             >
               Add Exercise Dev

@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import UserHistory from './pages/UserHistory';
 import Templates from './pages/Templates';
+import { TemplateProvider } from './utils/TemplateContext';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -35,6 +36,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
+      <TemplateProvider>
       <Router>
         <Header />
         <main className='App'>
@@ -58,6 +60,7 @@ function App() {
           </Routes>
         </main>
       </Router>
+      </TemplateProvider>
     </ApolloProvider>
   );
 }
