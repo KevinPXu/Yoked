@@ -6,6 +6,7 @@ import { useTemplateContext } from '../utils/TemplateContext';
 function ExerciseComponent({ title, setExerciseObject, exerciseObject, id }) {
   const { template, addName, addExercises, resetTemplate, addSets } = useTemplateContext()
   const [totalSets, setTotalSets] = useState([])
+  const BtnStyle = { col or: '#161616', backgroundColor: '#ffc529' };
 
   useEffect(() => {
     console.log(template)
@@ -24,43 +25,43 @@ function ExerciseComponent({ title, setExerciseObject, exerciseObject, id }) {
     addSets(id)
   };
 
-
   return (
     <>
       <h3>{title}</h3>
       <Grid
         container
-        spacing={8}
+        spacing={4}
         columns={13}>
         <Grid
           item
           xs={2}>
-          <p>Sets</p>
+          <u>Sets</u>
         </Grid>
         <Grid
           item
           xs={5}>
-          <p>Previous</p>
+          <u>Previous</u>
         </Grid>
         <Grid
           item
           xs={2}>
-          <p>lbs</p>
+          <u>lbs</u>
         </Grid>
         <Grid
           item
           xs={2}>
-          <p>Reps</p>
+          <u>Reps</u>
         </Grid>
         <Grid
           item
           xs={1}>
-          <p>✓</p>
+          <u>✓</u>
         </Grid>
       </Grid>
       {totalSets}
       <Button
         variant='contained'
+        style={BtnStyle}
         onClick={handleAddSetBtn}>
         + Add Set
       </Button>

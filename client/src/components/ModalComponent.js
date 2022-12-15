@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import ExerciseComponent from './ExerciseComponent';
-import ExerciseModal from './ExerciseModal'
-import { Button, Dialog, DialogTitle, DialogContent, Divider, Input } from '@mui/material';
-import {useMutation} from '@apollo/client';
-import{ ADD_EXERCISE_INSTANCE, ADD_TEMPLATE } from '../utils/mutations'
+import ExerciseModal from './ExerciseModal';
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Divider,
+  Input,
+  Box,
+} from '@mui/material';
+import { useMutation } from '@apollo/client';
+import { ADD_EXERCISE_INSTANCE, ADD_TEMPLATE } from '../utils/mutations';
 import { useTemplateContext } from '../utils/TemplateContext';
 
-import Auth from '../utils/auth'
-
-
+import Auth from '../utils/auth';
 
 function ModalComponent({ closeTempModal, handleTempClose, searchList, exerciseObject, setExerciseObject, totalSets, setTotalSets, exerciseList, setExerciseList }) {
   const [openExerciseModal, setExerciseModalOpen] = useState(false);
@@ -29,10 +35,7 @@ function ModalComponent({ closeTempModal, handleTempClose, searchList, exerciseO
 }, [template])
 
 
-
-
-
-
+  const BtnStyle = { color: '#161616', backgroundColor: '#ffc529' };
   const createTemplate = async () => {
     let template = {name: templateTitle, exercises: [], userId: Auth.getProfile().data._id}
     for  (const [key, value] of Object.entries(exerciseObject)) {
@@ -55,7 +58,7 @@ function ModalComponent({ closeTempModal, handleTempClose, searchList, exerciseO
     }})
     handleTempClose()
   }
-
+  
   const descriptionElementRef = React.useRef(null);
   React.useEffect(() => {
     if (closeTempModal) {
@@ -84,41 +87,50 @@ function ModalComponent({ closeTempModal, handleTempClose, searchList, exerciseO
           value={templateTitle}
           onChange={(e) => setTemplateTitle(e.target.value)}
         />
-        <Divider />
+          <Box my={1}>
+            <Divider />
+          </Box>
         {/* <Button
           variant='contained'
           onClick={handleAddExBtn}>
           Add new Exercise
         </Button> */}
-        <Button
-              variant="contained"
+          <Box my={2}>
+            <Button
+              variant='contained'
+              style={BtnStyle}
               onClick={() => {
                 setExerciseModalOpen(true);
-              }}
-            >
-              Add Exercise Dev
+              }}>
+              Add new Exercise
             </Button>
-      </DialogTitle>
-      <DialogContent
-        dividers={true}
-        ref={descriptionElementRef}>
-        {exerciseList}
-        <Divider />
-        <Button
-          variant='contained'
-          onClick={createTemplate}>
-            Create Template
+          </Box>
+        </DialogTitle>
+        <DialogContent
+          dividers={false}
+          ref={descriptionElementRef}>
+          {exerciseList}
+          <Box my={1}>
+            <Divider />
+          </Box>
+          <Box my={2}>
+            <Button
+              variant='contained'
+              style={BtnStyle}
+              onClick={createTemplate}>
+              Create Template
+            </Button>
+          </Box>
+          <Button
+            variant='contained'
+            style={BtnStyle}
+            onClick={handleTempClose}>
+            Close
           </Button>
-        <Button
-          variant='contained'
-          onClick={handleTempClose}
-        >
-          Close
-        </Button>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </Dialog>
     </div>
-      );
+  );
 }
 
 export default ModalComponent;

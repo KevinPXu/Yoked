@@ -26,7 +26,7 @@ export default function Nav() {
         <MenuIcon />
       </IconButton>
       <Drawer
-        PaperProps={{ sx: { width: '200px' } }}
+        PaperProps={{ sx: { width: '200px', backgroundColor: '#a9d1db' } }}
         anchor='left'
         open={isOpen}
         onClose={() => setIsOpen(false)}>

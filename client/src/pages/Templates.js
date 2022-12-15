@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_EXERCISE_TYPES, QUERY_USER } from '../utils/queries';
 import ModalComponent from '../components/ModalComponent';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, Box } from '@mui/material';
 import { useTemplateContext } from '../utils/TemplateContext';
 import TemplateBtn from '../components/TemplateBtns';
 
-import Auth from "../utils/auth"
+import Auth from '../utils/auth';
 
 export default function Template() {
   const { template, addName, addExercises, resetTemplate } = useTemplateContext()
@@ -46,6 +46,7 @@ export default function Template() {
       <Button
         variant='contained'
         fullWidth={true}
+        style={{ color: '#161616', backgroundColor: '#ffc529' }}
         onClick={handleTempOpen}>
         Create New Template
       </Button>
@@ -68,7 +69,7 @@ export default function Template() {
         <Grid
           item
           xs={1}>
-            {templates}
+          {templates}
         </Grid>
       </Grid>
       </>
