@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_EXERCISE_TYPES, QUERY_USER } from '../utils/queries';
 import ModalComponent from '../components/ModalComponent';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, Box } from '@mui/material';
 import { TemplateProvider } from '../utils/TemplateContext';
 
 import Auth from '../utils/auth';
@@ -37,6 +37,7 @@ export default function Template() {
       <Button
         variant='contained'
         fullWidth={true}
+        style={{ color: '#161616', backgroundColor: '#ffc529' }}
         onClick={handleTempOpen}>
         Create New Template
       </Button>
