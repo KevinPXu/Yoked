@@ -5,6 +5,8 @@ import ModalComponent from '../components/ModalComponent';
 import { Button, Grid, Box } from '@mui/material';
 import { useTemplateContext } from '../utils/TemplateContext';
 import TemplateBtn from '../components/TemplateBtns';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 import Auth from '../utils/auth';
 
@@ -22,6 +24,7 @@ export default function Template() {
   const [exerciseObject, setExerciseObject] = useState({});
   const [totalSets, setTotalSets] = useState([]);
   const [openTempModal, setOpenTempModal] = useState(false);
+  const [value, onChange] = useState(new Date());
   const handleTempOpen = () => setOpenTempModal(true);
   const handleTempClose = () => {
     setExerciseList([]);
@@ -57,6 +60,13 @@ export default function Template() {
 
   return (
     <>
+      <Box my={2}>
+        <Calendar
+          onChange={onChange}
+          value={value}
+        />
+      </Box>
+
       <Button
         variant='contained'
         fullWidth={true}
@@ -64,6 +74,7 @@ export default function Template() {
         onClick={handleTempOpen}>
         Create New Template
       </Button>
+
       <ModalComponent
         handleTempClose={handleTempClose}
         closeTempModal={openTempModal}
