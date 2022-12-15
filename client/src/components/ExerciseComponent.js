@@ -4,32 +4,19 @@ import ExerciseSetComponent from './ExerciseSetComponent';
 import { useTemplateContext } from '../utils/TemplateContext';
 
 function ExerciseComponent({ title, setExerciseObject, exerciseObject, id }) {
-  const { template, addName, addExercises, resetTemplate, addSets } =
-    useTemplateContext();
-  const [totalSets, setTotalSets] = useState([]);
+  const { template, addName, addExercises, resetTemplate, addSets } = useTemplateContext()
+  const [totalSets, setTotalSets] = useState([])
   const BtnStyle = { color: '#161616', backgroundColor: '#ffc529' };
 
   useEffect(() => {
-    console.log(template);
-    let totalSets = [];
+    let totalSets=[]
     if (template.exercises) {
       for (const set of template.exercises[id]['sets']) {
-        console.log(id);
-        totalSets.push(
-          <ExerciseSetComponent
-            key={totalSets.length}
-            id={id}
-            setExerciseObject={setExerciseObject}
-            exerciseObject={exerciseObject}
-            title={title}
-            index={totalSets.length}
-          />
-        );
+        totalSets.push(<ExerciseSetComponent key={totalSets.length} id={id} setExerciseObject={setExerciseObject} exerciseObject={exerciseObject} title={title} index={totalSets.length}/>)
       }
     }
-    console.log(totalSets);
-    setTotalSets(totalSets);
-  }, [template]);
+    setTotalSets(totalSets)
+}, [template])
 
   const handleAddSetBtn = () => {
     addSets(id);

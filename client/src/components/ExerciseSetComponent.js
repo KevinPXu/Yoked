@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid, Input, Button, Box } from '@mui/material';
+import { useTemplateContext } from '../utils/TemplateContext';
 
 function ExerciseSetComponent({
   title,
@@ -8,6 +9,7 @@ function ExerciseSetComponent({
   index,
   id,
 }) {
+  const { template, addName, addExercises, updateSet } = useTemplateContext()
   const [weightValue, setWeightValue] = React.useState('');
   const [repValue, setRepValue] = React.useState('');
   const BtnStyle = { color: '#161616', backgroundColor: '#ffc529' };
@@ -15,6 +17,16 @@ function ExerciseSetComponent({
     exerciseObject[id] = { name: title, sets: [] };
   }
 
+  useEffect(() => {
+    if (template.exercises[id].sets) {
+      console.log(template.exercises[id].sets[index])
+      setWeightValue(template.exercises[id].sets[index] ? template.exercises[id].sets[index].weight : 0)
+      setRepValue(template.exercises[id].sets[index] ? template.exercises[id].sets[index].reps : 0)
+    }
+    console.log(template)
+
+}, [template])
+  
   return (
     <>
       <Box mb={2}>
@@ -25,7 +37,7 @@ function ExerciseSetComponent({
           <Grid
             item
             xs={2}>
-            <p>1</p>
+            <p>{index}</p>
           </Grid>
           <Grid
             item
@@ -40,7 +52,9 @@ function ExerciseSetComponent({
               value={weightValue}
               type='number'
               onChange={(e) => {
-                setWeightValue(e.target.value);
+                setWeightValue(e.target.value)
+                updateSet(id, index, e.target.value, repValue)
+                console.log(template);
               }}
             />
           </Grid>
@@ -52,7 +66,8 @@ function ExerciseSetComponent({
               value={repValue}
               type='number'
               onChange={(e) => {
-                setRepValue(e.target.value);
+                setRepValue(e.target.value)
+                updateSet(id, index, weightValue, e.target.value);
               }}
             />
           </Grid>
