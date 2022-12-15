@@ -19,7 +19,13 @@ export default function Template() {
     templates.push(
       <Button
         variant='contained'
-        sx={{ bgcolor: 'white', color: 'black' }}
+        sx={{
+          bgcolor: 'white',
+          color: 'black',
+          width: 200,
+          padding: 1,
+          margin: 2,
+        }}
         key={elem.name}>
         {elem.name}
       </Button>
