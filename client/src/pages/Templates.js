@@ -9,36 +9,50 @@ import TemplateBtn from '../components/TemplateBtns';
 import Auth from '../utils/auth';
 
 export default function Template() {
-  const { template, addName, addExercises, resetTemplate } = useTemplateContext()
+  const { template, addName, addExercises, resetTemplate } =
+    useTemplateContext();
   const { loading, data } = useQuery(QUERY_EXERCISE_TYPES);
   const templateResult = useQuery(QUERY_USER, {
-    variables: {id: Auth.getProfile().data._id}
-  })
+    variables: { id: Auth.getProfile().data._id },
+  });
 
+  const templates = [];
 
-
-  const templates = []
-  
   const [exerciseList, setExerciseList] = useState([]);
-  const [exerciseObject, setExerciseObject] =useState({});
+  const [exerciseObject, setExerciseObject] = useState({});
   const [totalSets, setTotalSets] = useState([]);
   const [openTempModal, setOpenTempModal] = useState(false);
   const handleTempOpen = () => setOpenTempModal(true);
   const handleTempClose = () => {
-    setExerciseList([])
-    setExerciseObject({})
-    setTotalSets([])
-    resetTemplate()
-    setOpenTempModal(false)};
+    setExerciseList([]);
+    setExerciseObject({});
+    setTotalSets([]);
+    resetTemplate();
+    setOpenTempModal(false);
+  };
 
-  templateResult.data?.user?.templates?.map((elem) => templates.push(<TemplateBtn templateData={elem} key={templates.length} handleTempOpen={handleTempOpen} exerciseObject={exerciseObject} setExerciseObject={setExerciseObject}/>))
+  templateResult.data?.user?.templates?.map((elem) =>
+    templates.push(
+      <Grid
+        item
+        xs={1}>
+        <TemplateBtn
+          templateData={elem}
+          key={templates.length}
+          handleTempOpen={handleTempOpen}
+          exerciseObject={exerciseObject}
+          setExerciseObject={setExerciseObject}
+        />
+      </Grid>
+    )
+  );
 
   function handleExerciseObjectChange(newValue) {
-    setExerciseObject(newValue)
+    setExerciseObject(newValue);
   }
 
   function handleSetListChange(newValue) {
-    setTotalSets(newValue)
+    setTotalSets(newValue);
   }
 
   return (
@@ -64,14 +78,10 @@ export default function Template() {
       <Grid
         container
         my={4}
-        columns={3}
-        spacing={5}>
-        <Grid
-          item
-          xs={1}>
-          {templates}
-        </Grid>
+        columns={2}
+        spacing={2}>
+        {templates}
       </Grid>
-      </>
+    </>
   );
 }
