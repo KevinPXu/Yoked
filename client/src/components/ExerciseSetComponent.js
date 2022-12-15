@@ -1,13 +1,12 @@
 import React from 'react';
-import { Grid, Input, Button } from '@mui/material';
+import { Grid, Input, Button, DialogTitle } from '@mui/material';
 
 function ExerciseSetComponent({ title, setExerciseObject, exerciseObject, index, id }) {
   const [weightValue, setWeightValue] = React.useState('');
   const [repValue, setRepValue] = React.useState('');
   if (!exerciseObject[id]) {
-    exerciseObject[id] = []
+    exerciseObject[id] = { name: title, sets: [] }
   }
-  console.log(index)
   return (
     <>
       <Grid
@@ -52,9 +51,8 @@ function ExerciseSetComponent({ title, setExerciseObject, exerciseObject, index,
           xs={1}>
           <Button variant='contained'
           onClick={(e) => {
-            exerciseObject[id][index] = {weight: Number(weightValue), reps: Number(repValue)}
+            exerciseObject[id]['sets'][index] = {weight: Number(weightValue), reps: Number(repValue)}
             setExerciseObject(exerciseObject)
-            console.log(exerciseObject)
           }}>✓</Button>
         </Grid>
       </Grid>
