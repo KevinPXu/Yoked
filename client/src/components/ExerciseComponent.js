@@ -19,7 +19,7 @@ function ExerciseComponent({ title, setExerciseObject, exerciseObject, id }) {
 }, [template])
 
   const handleAddSetBtn = () => {
-    addSets(id)
+    addSets(id);
   };
 
   return (
