@@ -38,7 +38,8 @@ export default function Template() {
     templates.push(
       <Grid
         item
-        xs={1}>
+        xs={1}
+        key={templates.length}>
         <TemplateBtn
           templateData={elem}
           key={templates.length}
