@@ -89,7 +89,9 @@ function ModalComponent({ closeTempModal, handleTempClose, searchList }) {
             value={templateTitle}
             onChange={(e) => setTemplateTitle(e.target.value)}
           />
-          <Divider />
+          <Box my={1}>
+            <Divider />
+          </Box>
           {/* <Button
           variant='contained'
           onClick={handleAddExBtn}>
@@ -110,8 +112,10 @@ function ModalComponent({ closeTempModal, handleTempClose, searchList }) {
           dividers={false}
           ref={descriptionElementRef}>
           {exerciseList}
-          <Divider />
-          <Box mb={2}>
+          <Box my={1}>
+            <Divider />
+          </Box>
+          <Box my={2}>
             <Button
               variant='contained'
               style={BtnStyle}
