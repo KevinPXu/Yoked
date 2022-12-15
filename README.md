@@ -2,6 +2,8 @@
 
 [![](https://img.shields.io/static/v1?label=License&message=MIT&color=<yellow>)](https://opensource.org/licenses/MIT)
 
+[Deployed Application](https://young-headland-04692.herokuapp.com/)
+
 ## Description
 
 This repostiory contains a full-stack application meant to function as a workout companion. Yoked uses MongoDB to host a database of different exercises and workout templates, which users can either use directly or draw from to create custom workouts. Users are able to create an account, log in, and save their own workout templates to track progress. Material UI provides a polished and approachable interface.
