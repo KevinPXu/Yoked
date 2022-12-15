@@ -8,13 +8,15 @@ import {
   Button,
   Box,
 } from '@mui/material';
+import { useTemplateContext } from '../utils/TemplateContext';
+import ExerciseComponent  from './ExerciseComponent'
 
-function ExerciseModal({ open, close, handleSubmit, searchList }) {
+function ExerciseModal({ open, close, searchList, setExerciseList, exerciseList}) {
   const [inputValue, setInputValue] = useState('');
-  const [selectedOption, setSelectedOption] = useState({});
-
+  const [selectedOption, setSelectedOption] = useState({})
+  const { template, addName, addExercises } = useTemplateContext()
   const BtnStyle = { color: '#161616', backgroundColor: '#ffc529' };
-  console.log(searchList);
+
   return (
     <>
       <Dialog
@@ -55,9 +57,11 @@ function ExerciseModal({ open, close, handleSubmit, searchList }) {
               variant='contained'
               style={BtnStyle}
               onClick={() => {
-                console.log(inputValue);
-                handleSubmit(selectedOption);
-              }}>
+                let object ={...template.exercises}
+                object[selectedOption.id] = { name: selectedOption.label, sets: []}
+                addExercises(object);
+              }}
+            >
               Add Exercise
             </Button>
           </Box>

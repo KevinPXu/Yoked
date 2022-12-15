@@ -41,6 +41,17 @@ query User($id: ID!) {
       password
       templates {
         _id
+        exercises {
+          exerciseType {
+            name
+            _id
+          }
+          _id
+          sets {
+            reps
+            weight
+          }
+        }
         name
       }
     }

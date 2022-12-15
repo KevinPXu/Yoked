@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Grid } from '@mui/material';
 import ExerciseSetComponent from './ExerciseSetComponent';
+import { useTemplateContext } from '../utils/TemplateContext';
 
 function ExerciseComponent({ title, setExerciseObject, exerciseObject, id }) {
-  const [totalSets, setTotalSets] = useState([]);
+  const { template, addName, addExercises, resetTemplate, addSets } = useTemplateContext()
+  const [totalSets, setTotalSets] = useState([])
+  const BtnStyle = { col or: '#161616', backgroundColor: '#ffc529' };
+
+  useEffect(() => {
+    console.log(template)
+    let totalSets=[]
+    if (template.exercises) {
+      for (const set of template.exercises[id]['sets']) {
+        console.log(id)
+        totalSets.push(<ExerciseSetComponent key={totalSets.length} id={id} setExerciseObject={setExerciseObject} exerciseObject={exerciseObject} title={title} index={totalSets.length}/>)
+      }
+    }
+    console.log(totalSets)
+    setTotalSets(totalSets)
+}, [template])
 
   const handleAddSetBtn = () => {
-    setTotalSets(
-      totalSets.concat(
-        <ExerciseSetComponent
-          id={id}
-          setExerciseObject={setExerciseObject}
-          exerciseObject={exerciseObject}
-          title={title}
-          index={totalSets.length}
-        />
-      )
-    );
+    addSets(id)
   };
-
-  const BtnStyle = { color: '#161616', backgroundColor: '#ffc529' };
 
   return (
     <>

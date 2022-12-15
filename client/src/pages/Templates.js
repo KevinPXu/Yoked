@@ -3,43 +3,46 @@ import { useQuery } from '@apollo/client';
 import { QUERY_EXERCISE_TYPES, QUERY_USER } from '../utils/queries';
 import ModalComponent from '../components/ModalComponent';
 import { Button, Grid, Box } from '@mui/material';
-import { TemplateProvider } from '../utils/TemplateContext';
+import { useTemplateContext } from '../utils/TemplateContext';
+import TemplateBtn from '../components/TemplateBtns';
 
 import Auth from '../utils/auth';
 
 export default function Template() {
+  const { template, addName, addExercises, resetTemplate } = useTemplateContext()
   const { loading, data } = useQuery(QUERY_EXERCISE_TYPES);
   const templateResult = useQuery(QUERY_USER, {
-    variables: { id: Auth.getProfile().data._id },
-  });
-  console.log(Auth.getProfile().data._id);
+    variables: {id: Auth.getProfile().data._id}
+  })
 
-  const templates = [];
-  templateResult.data?.user?.templates?.map((elem) =>
-    templates.push(
-      <Button
-        variant='contained'
-        sx={{
-          bgcolor: 'white',
-          color: 'black',
-          width: 200,
-          padding: 1,
-          margin: 2,
-        }}
-        key={elem.name}>
-        {elem.name}
-      </Button>
-    )
-  );
-  console.log(templateResult.loading);
-  console.log(templateResult.data?.user?.templates);
-  console.log(templates);
+
+
+  const templates = []
+  
+  const [exerciseList, setExerciseList] = useState([]);
+  const [exerciseObject, setExerciseObject] =useState({});
+  const [totalSets, setTotalSets] = useState([]);
   const [openTempModal, setOpenTempModal] = useState(false);
   const handleTempOpen = () => setOpenTempModal(true);
-  const handleTempClose = () => setOpenTempModal(false);
+  const handleTempClose = () => {
+    setExerciseList([])
+    setExerciseObject({})
+    setTotalSets([])
+    resetTemplate()
+    setOpenTempModal(false)};
+
+  templateResult.data?.user?.templates?.map((elem) => templates.push(<TemplateBtn templateData={elem} key={templates.length} handleTempOpen={handleTempOpen} exerciseObject={exerciseObject} setExerciseObject={setExerciseObject}/>))
+
+  function handleExerciseObjectChange(newValue) {
+    setExerciseObject(newValue)
+  }
+
+  function handleSetListChange(newValue) {
+    setTotalSets(newValue)
+  }
 
   return (
-    <TemplateProvider>
+    <>
       <Button
         variant='contained'
         fullWidth={true}
@@ -51,6 +54,12 @@ export default function Template() {
         handleTempClose={handleTempClose}
         closeTempModal={openTempModal}
         searchList={data}
+        exerciseObject={exerciseObject}
+        exerciseList={exerciseList}
+        setExerciseList={setExerciseList}
+        setExerciseObject={handleExerciseObjectChange}
+        setTotalSets={handleSetListChange}
+        totalSets={totalSets}
       />
       <Grid
         container
@@ -63,6 +72,6 @@ export default function Template() {
           {templates}
         </Grid>
       </Grid>
-    </TemplateProvider>
+      </>
   );
 }

@@ -10,11 +10,11 @@ function ExerciseSetComponent({
 }) {
   const [weightValue, setWeightValue] = React.useState('');
   const [repValue, setRepValue] = React.useState('');
-  if (!exerciseObject[id]) {
-    exerciseObject[id] = [];
-  }
   const BtnStyle = { color: '#161616', backgroundColor: '#ffc529' };
-  console.log(index);
+  if (!exerciseObject[id]) {
+    exerciseObject[id] = { name: title, sets: [] }
+  }
+  
   return (
     <>
       <Box mb={2}>
@@ -56,25 +56,17 @@ function ExerciseSetComponent({
               }}
             />
           </Grid>
-          <Grid
-            item
-            xs={1}>
-            <Button
-              variant='contained'
-              style={BtnStyle}
-              onClick={(e) => {
-                exerciseObject[id][index] = {
-                  weight: Number(weightValue),
-                  reps: Number(repValue),
-                };
-                setExerciseObject(exerciseObject);
-                console.log(exerciseObject);
-              }}>
-              ✓
-            </Button>
-          </Grid>
+        <Grid
+          item
+          xs={1}>
+          <Button variant='contained'
+          onClick={(e) => {
+            exerciseObject[id]['sets'][index] = {weight: Number(weightValue), reps: Number(repValue)}
+            setExerciseObject(exerciseObject)
+          }}>✓</Button>
         </Grid>
-      </Box>
+      </Grid>
+      </Box> 
     </>
   );
 }
