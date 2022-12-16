@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from 'react';
-import { setVerbosity } from 'ts-invariant';
 
 const TemplateContext = createContext();
 

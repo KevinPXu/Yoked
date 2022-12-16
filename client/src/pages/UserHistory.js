@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 import Auth from '../utils/auth';
 
 const UserHistory = () => {
@@ -30,10 +31,11 @@ const UserHistory = () => {
 
 
     return (
+        Auth.loggedIn() ? 
         <div>
             <h2>User History</h2>
             <ul>
-                {historyData.history.map((hist) => {
+                {historyData?.history?.map((hist) => {
                     return(
                         <>
                             <li>
@@ -57,6 +59,8 @@ const UserHistory = () => {
                 })}
             </ul>
         </div>
+        :
+        <Navigate to="/login" />
     )
 };
 

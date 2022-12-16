@@ -2,6 +2,7 @@ import { AppBar, Box, Typography, Button, Toolbar } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import Nav from './Nav';
+import Auth from '../utils/auth'
 
 const theme = createTheme({
   palette: {
@@ -28,6 +29,7 @@ const theme = createTheme({
 });
 
 export default function Header() {
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ flexGrow: 1 }}>
@@ -48,12 +50,18 @@ export default function Header() {
               alt='EggLogo'
               width='50'
               height='50'></img>
-            <Button
+              {Auth.loggedIn() ?        
+              <Button
+              style={{ color: '#161616' }}
+              onClick = { () => Auth.logout()}>
+              Log Out
+            </Button> : <Button
               component={RouterLink}
               style={{ color: '#161616' }}
               to='/signup'>
               Sign Up
-            </Button>
+            </Button>}
+
           </Toolbar>
         </AppBar>
       </Box>

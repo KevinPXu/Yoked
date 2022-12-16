@@ -9,6 +9,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 import Auth from '../utils/auth';
+import { Navigate } from 'react-router-dom';
 
 export default function Template() {
   const { template, addName, addExercises, resetTemplate } =
@@ -60,6 +61,7 @@ export default function Template() {
   }
 
   return (
+    Auth.loggedIn() ?
     <>
       <Box my={2}>
         <Calendar
@@ -94,6 +96,7 @@ export default function Template() {
         spacing={2}>
         {templates}
       </Grid>
-    </>
+    </> :
+    <Navigate to="/login?" />
   );
 }

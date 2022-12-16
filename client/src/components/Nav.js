@@ -35,7 +35,7 @@ export default function Nav() {
             <ListItem>
               <ListItemButton
                 component={RouterLink}
-                to='/templates'>
+                to='/'>
                 <ListItemText
                   primary='Templates'
                   sx={{ color: 'black' }}
