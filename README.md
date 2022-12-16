@@ -16,10 +16,6 @@ Create an account or log in to begin. Once logged in, the user will be directed 
 
 ---
 
-## Deployed Link
-
-## https://young-headland-04692.herokuapp.com/
-
 ## Technologies Used
 
 - React.js
@@ -124,6 +120,32 @@ Create an account or log in to begin. Once logged in, the user will be directed 
       </Box>
     </ThemeProvider>
 ```
+
+---
+
+### code example context
+spread the existing elements up to the one you want to update, add the udpated item, spread the remainder
+```Javascript
+    const updateSet = (id, index, weight, reps) => {
+        template.exercises[id]['sets'] = [...template.exercises[id]['sets'].slice(0, index), {'weight': Number(weight), 'reps': Number(reps)}, ...template.exercises[id]['sets'].slice(index + 1,)]
+        console.log(template)
+        setTemplate({...template})
+    }
+```
+
+---
+
+### code example auth
+We use the auth to make sure we are creating instances for the right user
+```Javascript
+const { data } = await createExerciseInstance({
+    variables: {
+        "userId": Auth.getProfile().data._id,
+        "exerciseType": key,
+        "sets": [...sets],
+    }
+})
+
 
 ## Contributors
 
