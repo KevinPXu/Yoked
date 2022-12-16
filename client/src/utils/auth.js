@@ -7,7 +7,8 @@ class AuthService {
   }
 
   getProfile() {
-    return decode(this.getToken());
+    const token = this.getToken()
+    return token ? decode(this.getToken()) : {data: {_id : ''}};
   }
 
   isTokenExpired(token) {
@@ -29,7 +30,7 @@ class AuthService {
 
   login(idToken) {
     localStorage.setItem('id_token', idToken);
-    window.location.assign('/templates');
+    window.location.assign('/');
   }
 
   logout() {

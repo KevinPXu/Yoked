@@ -54,7 +54,7 @@ function App() {
               element={<UserHistory />}
             />
             <Route
-              path='/templates'
+              path='/'
               element={<Templates />}
             />
           </Routes>
