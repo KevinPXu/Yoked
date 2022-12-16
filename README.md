@@ -145,6 +145,7 @@ const { data } = await createExerciseInstance({
         "sets": [...sets],
     }
 })
+```
 
 
 ## Contributors
